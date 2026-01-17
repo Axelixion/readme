@@ -1,0 +1,11 @@
+beautifulsoup4>=4.13.3
+cachecontrol[filecache]>=0.14.2
+feedparser>=6.0.11
+flask>=3.1.0
+gunicorn>=22.0.0
+httplib2>=0.22.0
+image>=1.5.33
+lxml>=5.2.2
+requests>=2.32.3
+rss>=0.0.0
+Pillow>=10.4.0
