@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - My Dashboard</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+
+    <table class="header">
+        <tr>
+          <td colspan="2" class="width-auto">
+            <h1 class="title"><ion-icon name="book" style="vertical-align: middle; color: #7b0000;"></ion-icon> README (updated: <time style="white-space: pre;">2025-01-25</time>)</h1>
+          </td>
+        </tr>
+      </table>
+
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="static/js/main.js"></script>
+</body>
+</html> 
