@@ -513,12 +513,85 @@ label input {
 }
 
 /* Add your custom styles here */
-.card {
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+/* New Hacker News-like layout */
+.main-feed {
+    max-width: 900px; /* Constrain width like Hacker News */
+    margin: 20px auto;
+    background-color: var(--background-color);
+    border: 1px solid var(--text-color-alt);
+    padding: 10px;
 }
 
-.card:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: box-shadow 0.3s ease-in-out;
+.feed-item-row {
+    display: flex;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--text-color-alt);
+}
+
+.feed-item-row:last-child {
+    border-bottom: none;
+}
+
+.item-score {
+    flex-shrink: 0; /* Prevent score from shrinking */
+    width: 40px; /* Fixed width for score */
+    text-align: right;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-color);
+    margin-right: 10px;
+    padding-top: 2px; /* Align with title baseline */
+}
+
+.item-content {
+    flex-grow: 1; /* Allow content to take remaining space */
+}
+
+.item-title a {
+    font-weight: var(--font-weight-medium);
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1rem;
+    line-height: var(--line-height);
+}
+
+.item-title a:hover {
+    text-decoration: underline;
+}
+
+.item-meta {
+    font-size: 0.8rem;
+    color: var(--text-color-alt);
+    line-height: var(--line-height);
+}
+
+.item-source {
+    color: var(--text-color-alt);
+}
+
+.item-meta a {
+    color: var(--text-color-alt);
+    text-decoration: none;
+}
+
+.item-meta a:hover {
+    text-decoration: underline;
+}
+
+.item-description {
+    font-size: 0.9rem;
+    color: var(--text-color-alt);
+    margin-top: 5px;
+    line-height: var(--line-height);
+}
+
+.item-thumbnail {
+    margin-top: 5px;
+    max-width: 100px; /* Limit thumbnail size */
+    height: auto;
+}
+
+.item-thumbnail img {
+    border: 1px solid var(--text-color-alt);
 } 

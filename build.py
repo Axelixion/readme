@@ -283,47 +283,74 @@ def main():
         shutil.rmtree(DEPLOY_DIRECTORY)
     os.makedirs(os.path.join(DEPLOY_DIRECTORY, 'imgs', 'thumbs'))
 
-    # Download feeds
+    # Create .nojekyll file to prevent Jekyll from building the site
+    with open(os.path.join(DEPLOY_DIRECTORY, '.nojekyll'), 'w') as f:
+        pass
+
+    # Download feeds and collect all entries
     clean_thumbs_directory()
-    hackernews = get_hackernews_feed()
-    reddit = description_thumbs(get_reddit_feed())
-    proggit = get_proggit_feed()
-    dzone = get_feed("http://www.dzone.com/links/feed/frontpage/rss.xml", "dzone")
-    slashdot = get_slashdot_feed()
-    techmeme = get_feed("http://www.techmeme.com/index.xml", "techmeme")
-    wired = get_feed("http://feeds.wired.com/wired/index", "wired")
-    videos = get_reddit_videos()
+    all_entries = []
+
+    # Helper to add source and process entries
+    def add_entries(entries_list, source_name):
+        for entry in entries_list:
+            entry.source_name = source_name
+            # Attempt to get score/comment count, default to 0
+            entry.score = 0
+            entry.comments_count = 0
+
+            # Heuristics for Hacker News (hnrss.org)
+            if source_name == 'Hacker News':
+                if hasattr(entry, 'points'): # Some hnrss feeds use 'points'
+                    entry.score = int(entry.points)
+                elif hasattr(entry, 'hn_points'): # Other hnrss feeds use 'hn_points'
+                    entry.score = int(entry.hn_points)
+                if hasattr(entry, 'comments'): # Some hnrss feeds use 'comments'
+                    entry.comments_count = int(entry.comments)
+                elif hasattr(entry, 'hn_comments'): # Other hnrss feeds use 'hn_comments'
+                    entry.comments_count = int(entry.hn_comments)
+            # Add more specific parsing for Reddit if needed, currently not directly available in standard RSS
+            
+            all_entries.append(entry)
+
+    add_entries(get_hackernews_feed(), 'Hacker News')
+    add_entries(description_thumbs(get_reddit_feed()), 'Reddit')
+    add_entries(get_proggit_feed(), 'Proggit')
+    add_entries(get_feed("http://www.dzone.com/links/feed/frontpage/rss.xml", "dzone"), 'DZone')
+    add_entries(get_slashdot_feed(), 'Slashdot')
+    add_entries(get_feed("http://www.techmeme.com/index.xml", "techmeme"), 'Techmeme')
+    add_entries(get_feed("http://feeds.wired.com/wired/index", "wired"), 'Wired')
+    add_entries(get_reddit_videos(), 'Videos')
+
+    # Calculate score for each entry
+    def calculate_custom_score(entry):
+        # Recency: higher for newer articles. time.mktime gives seconds since epoch.
+        # Max score for very new articles, decaying over time.
+        published_timestamp = time.mktime(entry.published_parsed) if hasattr(entry, 'published_parsed') else datetime.now().timestamp()
+        time_since_publish = datetime.now().timestamp() - published_timestamp
+        
+        # Simple decay: score decreases by 1 for every hour past. Adjust divisor for faster/slower decay.
+        recency_score = max(0, 1000 - (time_since_publish / 3600)) 
+
+        # Popularity: sum of score and comments (if available)
+        popularity_score = getattr(entry, 'score', 0) + getattr(entry, 'comments_count', 0)
+
+        # Combine recency and popularity (weights can be adjusted)
+        # Prioritize recency slightly more for a fresh feed
+        return (recency_score * 0.7) + (popularity_score * 0.3)
+
+    for entry in all_entries:
+        entry.custom_score = calculate_custom_score(entry)
+    
+    # Sort all entries by custom score
+    all_entries.sort(key=lambda entry: entry.custom_score, reverse=True)
 
     # Create context dictionary for Flask template
     current_datetime_str = datetime.now().strftime("%Y-%m-%d %H:%M")
     context = {
-        'hackernews': hackernews,
-        'reddit': reddit,
-        'proggit': proggit,
-        'dzone': dzone,
-        'slashdot': slashdot,
-        'techmeme': techmeme,
-        'wired': wired,
-        'videos': videos,
-        'logos': '5',
+        'all_entries': all_entries,
         'current_datetime': current_datetime_str
     }
-
-    app = Flask(__name__, template_folder='templates')
-    with app.app_context():
-        # Render HTML using Flask's render_template
-        dashboard_html = render_template('dashboard.html', **context)
-        tools_html = render_template('tools.html')
-
-    # Write the rendered HTML to file
-    with codecs.open(os.path.join(DEPLOY_DIRECTORY, 'index.html'), 'w', 'utf8') as f:
-        f.write(dashboard_html)
-    with codecs.open(os.path.join(DEPLOY_DIRECTORY, 'tools.html'), 'w', 'utf8') as f:
-        f.write(tools_html)
-
-    # Copy static files
-    if os.path.exists('static'):
-        shutil.copytree('static', os.path.join(DEPLOY_DIRECTORY, 'static'))
 
 if __name__ == "__main__":
     main()

@@ -1,176 +1,47 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
-        <h1>Dashboard</h1>
-    </div>
-</div>
-<div class="grid">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Hacker News</h5>
-            <div class="feed-list" id="hackernews">
-    {% for entry in hackernews %}
-    <div class="feed-item">
-        <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
-        {% if entry.comments_link %}
-        <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
-        {% endif %}
-        {% if entry.description %}
-        <p>{{ entry.description | safe }}</p>
-        {% endif %}
+<div class="main-feed">
+    {% for entry in all_entries %}
+    <div class="feed-item-row">
+        <div class="item-score">
+            {% if entry.score %}
+            {{ entry.score }}
+            {% else %}
+            0
+            {% endif %}
+        </div>
+        <div class="item-content">
+            <div class="item-title">
+                <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+            </div>
+            <div class="item-meta">
+                <span class="item-source">({{ entry.source_name }})</span>
+                {% if entry.comments_link %}
+                | <a href="{{ entry.comments_link }}" target="_blank">
+                    {% if entry.comments_count %}
+                    {{ entry.comments_count }} comments
+                    {% else %}
+                    discuss
+                    {% endif %}
+                </a>
+                {% endif %}
+                {% if entry.published_parsed %}
+                | <span class="item-time">{{ entry.published_parsed }}</span>
+                {% endif %}
+            </div>
+            {% if entry.description %}
+            <div class="item-description">
+                {{ entry.description | safe }}
+            </div>
+            {% endif %}
+            {% if entry.thumb %}
+            <div class="item-thumbnail">
+                <img src="{{ entry.thumb }}" alt="Thumbnail">
+            </div>
+            {% endif %}
+        </div>
     </div>
     {% endfor %}
-</div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Reddit</h5>
-            <div class="feed-list" id="reddit">
-                {% for entry in reddit %}
-                <div class="feed-item">
-                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
-                    {% if entry.comments_link %}
-                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
-                    {% endif %}
-                    {% if entry.description %}
-                    <p>{{ entry.description | safe }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Proggit</h5>
-            <div class="feed-list" id="proggit">
-                {% for entry in proggit %}
-                <div class="feed-item">
-                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
-                    {% if entry.comments_link %}
-                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
-                    {% endif %}
-                    {% if entry.description %}
-                    <p>{{ entry.description | safe }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Hack A Day</h5>
-            <div class="feed-list" id="hackaday">
-                {% for entry in hackaday %}
-                <div class="feed-item">
-                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
-                    {% if entry.comments_link %}
-                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
-                    {% endif %}
-                    {% if entry.description %}
-                    <p>{{ entry.description | safe }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">DZone</h5>
-            <div class="feed-list" id="dzone">
-                {% for entry in dzone %}
-                <div class="feed-item">
-                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
-                    {% if entry.comments_link %}
-                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
-                    {% endif %}
-                    {% if entry.description %}
-                    <p>{{ entry.description | safe }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Slashdot</h5>
-            <div class="feed-list" id="slashdot">
-                {% for entry in slashdot %}
-                <div class="feed-item">
-                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
-                    {% if entry.comments_link %}
-                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
-                    {% endif %}
-                    {% if entry.description %}
-                    <p>{{ entry.description | safe }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Techmeme</h5>
-            <div class="feed-list" id="techmeme">
-                {% for entry in techmeme %}
-                <div class="feed-item">
-                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
-                    {% if entry.comments_link %}
-                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
-                    {% endif %}
-                    {% if entry.description %}
-                    <p>{{ entry.description | safe }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Wired</h5>
-            <div class="feed-list" id="wired">
-                {% for entry in wired %}
-                <div class="feed-item">
-                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
-                    {% if entry.comments_link %}
-                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
-                    {% endif %}
-                    {% if entry.description %}
-                    <p>{{ entry.description | safe }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Videos</h5>
-            <div class="feed-list" id="videos">
-                {% for entry in videos %}
-                <div class="feed-item">
-                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
-                    {% if entry.comments_link %}
-                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
-                    {% endif %}
-                    {% if entry.description %}
-                    <p>{{ entry.description | safe }}</p>
-                    {% endif %}
-                    {% if entry.thumb %}
-                    <img src="{{ entry.thumb }}" alt="Thumbnail">
-                    {% endif %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 </div>
 {% endblock %}
