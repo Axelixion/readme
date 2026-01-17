@@ -103,6 +103,7 @@ def download_and_thumbnail(url, x=120, y=100, directory=THUMBS_DIRECTORY):
 	return thumb_name
 
 def download_feed(url, file_name):
+    os.makedirs('feeds', exist_ok=True)
     content = None
     if FORCE_CACHE:
         response = session.get(url)
