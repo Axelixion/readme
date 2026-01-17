@@ -10,7 +10,7 @@ import os
 import re
 from PIL import Image
 import hashlib
-from datetime import timedelta
+from datetime import datetime, timedelta
 from xml.sax import saxutils
 from flask import render_template
 
@@ -295,6 +295,7 @@ def main():
     videos = get_reddit_videos()
 
     # Create context dictionary for Flask template
+    current_datetime_str = datetime.now().strftime("%Y-%m-%d %H:%M")
     context = {
         'hackernews': hackernews,
         'reddit': reddit,
@@ -304,7 +305,8 @@ def main():
         'techmeme': techmeme,
         'wired': wired,
         'videos': videos,
-        'logos': '5'
+        'logos': '5',
+        'current_datetime': current_datetime_str
     }
 
     app = Flask(__name__, template_folder='templates')

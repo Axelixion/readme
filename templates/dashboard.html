@@ -11,15 +11,35 @@
         <div class="card-body">
             <h5 class="card-title">Hacker News</h5>
             <div class="feed-list" id="hackernews">
-                <p class="card-text">Loading Hacker News feed...</p>
-            </div>
+    {% for entry in hackernews %}
+    <div class="feed-item">
+        <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+        {% if entry.comments_link %}
+        <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
+        {% endif %}
+        {% if entry.description %}
+        <p>{{ entry.description | safe }}</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
         </div>
     </div>
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Reddit</h5>
             <div class="feed-list" id="reddit">
-                <p class="card-text">Loading Reddit feed...</p>
+                {% for entry in reddit %}
+                <div class="feed-item">
+                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+                    {% if entry.comments_link %}
+                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
+                    {% endif %}
+                    {% if entry.description %}
+                    <p>{{ entry.description | safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -27,7 +47,17 @@
         <div class="card-body">
             <h5 class="card-title">Proggit</h5>
             <div class="feed-list" id="proggit">
-                <p class="card-text">Loading Proggit feed...</p>
+                {% for entry in proggit %}
+                <div class="feed-item">
+                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+                    {% if entry.comments_link %}
+                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
+                    {% endif %}
+                    {% if entry.description %}
+                    <p>{{ entry.description | safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -35,7 +65,17 @@
         <div class="card-body">
             <h5 class="card-title">Hack A Day</h5>
             <div class="feed-list" id="hackaday">
-                <p class="card-text">Loading Hack A Day feed...</p>
+                {% for entry in hackaday %}
+                <div class="feed-item">
+                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+                    {% if entry.comments_link %}
+                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
+                    {% endif %}
+                    {% if entry.description %}
+                    <p>{{ entry.description | safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -43,7 +83,17 @@
         <div class="card-body">
             <h5 class="card-title">DZone</h5>
             <div class="feed-list" id="dzone">
-                <p class="card-text">Loading DZone feed...</p>
+                {% for entry in dzone %}
+                <div class="feed-item">
+                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+                    {% if entry.comments_link %}
+                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
+                    {% endif %}
+                    {% if entry.description %}
+                    <p>{{ entry.description | safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -51,7 +101,17 @@
         <div class="card-body">
             <h5 class="card-title">Slashdot</h5>
             <div class="feed-list" id="slashdot">
-                <p class="card-text">Loading Slashdot feed...</p>
+                {% for entry in slashdot %}
+                <div class="feed-item">
+                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+                    {% if entry.comments_link %}
+                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
+                    {% endif %}
+                    {% if entry.description %}
+                    <p>{{ entry.description | safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -59,7 +119,17 @@
         <div class="card-body">
             <h5 class="card-title">Techmeme</h5>
             <div class="feed-list" id="techmeme">
-                <p class="card-text">Loading Techmeme feed...</p>
+                {% for entry in techmeme %}
+                <div class="feed-item">
+                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+                    {% if entry.comments_link %}
+                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
+                    {% endif %}
+                    {% if entry.description %}
+                    <p>{{ entry.description | safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -67,7 +137,17 @@
         <div class="card-body">
             <h5 class="card-title">Wired</h5>
             <div class="feed-list" id="wired">
-                <p class="card-text">Loading Wired feed...</p>
+                {% for entry in wired %}
+                <div class="feed-item">
+                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+                    {% if entry.comments_link %}
+                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
+                    {% endif %}
+                    {% if entry.description %}
+                    <p>{{ entry.description | safe }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -75,7 +155,20 @@
         <div class="card-body">
             <h5 class="card-title">Videos</h5>
             <div class="feed-list" id="videos">
-                <p class="card-text">Loading video feed...</p>
+                {% for entry in videos %}
+                <div class="feed-item">
+                    <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+                    {% if entry.comments_link %}
+                    <a href="{{ entry.comments_link }}" target="_blank">Comments</a>
+                    {% endif %}
+                    {% if entry.description %}
+                    <p>{{ entry.description | safe }}</p>
+                    {% endif %}
+                    {% if entry.thumb %}
+                    <img src="{{ entry.thumb }}" alt="Thumbnail">
+                    {% endif %}
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
