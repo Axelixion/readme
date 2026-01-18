@@ -299,16 +299,24 @@ def main():
             entry.score = 0
             entry.comments_count = 0
 
-            # Heuristics for Hacker News (hnrss.org)
+            # Heuristics for Hacker News
             if source_name == 'Hacker News':
                 if hasattr(entry, 'points'): # Some hnrss feeds use 'points'
                     entry.score = int(entry.points)
                 elif hasattr(entry, 'hn_points'): # Other hnrss feeds use 'hn_points'
                     entry.score = int(entry.hn_points)
-                if hasattr(entry, 'comments'): # Some hnrss feeds use 'comments'
-                    entry.comments_count = int(entry.comments)
-                elif hasattr(entry, 'hn_comments'): # Other hnrss feeds use 'hn_comments'
+
+                if hasattr(entry, 'hn_comments'): # Check for 'hn_comments' first
                     entry.comments_count = int(entry.hn_comments)
+                elif hasattr(entry, 'num_comments'): # Check for 'num_comments'
+                    entry.comments_count = int(entry.num_comments)
+                elif hasattr(entry, 'comments'): # Fallback for 'comments'
+                    try:
+                        entry.comments_count = int(entry.comments)
+                    except (ValueError, TypeError):
+                        # This happens when entry.comments is a URL, which is expected for some feeds.
+                        # In this case, we just leave comments_count as 0.
+                        pass
             # Add more specific parsing for Reddit if needed, currently not directly available in standard RSS
             
             all_entries.append(entry)
