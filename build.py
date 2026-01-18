@@ -345,7 +345,13 @@ def main():
 
         # Combine recency and popularity (weights can be adjusted)
         # Prioritize recency slightly more for a fresh feed
-        return (recency_score * 0.7) + (popularity_score * 0.3)
+        score = (recency_score * 0.7) + (popularity_score * 0.3)
+
+        # Boost score for preferred sources
+        if entry.source_name in ['Hacker News', 'Reddit', 'Proggit']:
+            score *= 1.5  # 50% score boost
+
+        return score
 
     for entry in all_entries:
         entry.custom_score = calculate_custom_score(entry)
