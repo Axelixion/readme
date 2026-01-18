@@ -357,8 +357,20 @@ def main():
     current_datetime_str = datetime.now().strftime("%Y-%m-%d %H:%M")
     context = {
         'all_entries': all_entries,
-        'current_datetime': current_datetime_str
+        'current_datetime': current_datetime_str,
+        'title': 'README'
     }
+
+    # Render template and save to index.html
+    app = Flask(__name__)
+    with app.app_context():
+        rendered_html = render_template('dashboard.html', **context)
+
+    # Save the rendered HTML to the deployment directory
+    output_path = os.path.join(DEPLOY_DIRECTORY, 'index.html')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(rendered_html)
+
 
 if __name__ == "__main__":
     main()
