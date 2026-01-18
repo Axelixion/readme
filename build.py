@@ -271,10 +271,29 @@ def get_reddit_videos():
 	return videos
 	
 def get_slashdot_feed():
-	entries = get_feed("http://rss.slashdot.org/Slashdot/slashdot", "slashdot");
+	entries = get_feed("http://rss.slashdot.org/Slashdot/slashdot", "slashdot")
 	for entry in entries:
 		entry.description = remove_html_tags(entry.description) 
 	return entries	
+
+def get_techmeme_feed():
+    entries = get_feed("http://www.techmeme.com/index.xml", "techmeme")
+    for entry in entries:
+        soup = BeautifulSoup(entry.summary, features="lxml")
+        # Techmeme summary is a block of HTML, often a table.
+        # We find the first 'div' which usually contains the main story.
+        story_div = soup.find('div')
+        if story_div:
+            # Extract text and normalize whitespace
+            description_text = story_div.get_text(separator=' ', strip=True)
+            entry.description = ' '.join(description_text.split())
+        else:
+            # Fallback if structure is different
+            description_text = soup.get_text(separator=' ', strip=True)
+            entry.description = ' '.join(description_text.split())
+        
+        entry.title = entry.title.strip()
+    return entries
 
 
 def main():
@@ -326,7 +345,7 @@ def main():
     add_entries(get_proggit_feed(), 'Proggit')
     add_entries(get_feed("http://www.dzone.com/links/feed/frontpage/rss.xml", "dzone"), 'DZone')
     add_entries(get_slashdot_feed(), 'Slashdot')
-    add_entries(get_feed("http://www.techmeme.com/index.xml", "techmeme"), 'Techmeme')
+    add_entries(get_techmeme_feed(), 'Techmeme')
     add_entries(get_feed("http://feeds.wired.com/wired/index", "wired"), 'Wired')
     add_entries(get_reddit_videos(), 'Videos')
 
