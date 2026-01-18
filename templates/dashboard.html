@@ -26,8 +26,8 @@
                     {% endif %}
                 </a>
                 {% endif %}
-                {% if entry.published_parsed %}
-                | <span class="item-time">{{ entry.published_parsed }}</span>
+                {% if entry.published_formatted %}
+                | <span>{{ entry.published_formatted }}</span>
                 {% endif %}
             </div>
             {% if entry.description %}

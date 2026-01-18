@@ -359,6 +359,13 @@ def main():
     # Sort all entries by custom score
     all_entries.sort(key=lambda entry: entry.custom_score, reverse=True)
 
+    # Format dates for display
+    for entry in all_entries:
+        if hasattr(entry, 'published_parsed') and entry.published_parsed:
+            entry.published_formatted = time.strftime('%b %d, %Y', entry.published_parsed)
+        else:
+            entry.published_formatted = None
+
     # Create context dictionary for Flask template
     current_datetime_str = datetime.now().strftime("%Y-%m-%d %H:%M")
     context = {
