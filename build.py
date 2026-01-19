@@ -343,8 +343,23 @@ def main():
             all_entries.append(entry)
 
     add_entries(get_hackernews_feed(), 'Hacker News')
+    
+    # Reddit Feeds
     add_entries(description_thumbs(get_reddit_feed()), 'Reddit')
     add_entries(get_proggit_feed(), 'Proggit')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/unitedkingdom/.rss", "r_unitedkingdom"), 'UK')
+    
+    # Tech & Science Subreddits
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/futurology/.rss", "r/futurology"), 'Futurology')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/space/.rss", "r/space"), 'Space')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/gadgets/.rss", "r/gadgets"), 'Gadgets')
+    
+    # Pop Culture Subreddits
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/movies/.rss", "r/movies"), 'Movies')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/television/.rss", "r/television"), 'Television')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/music/.rss", "r/music"), 'Music')
+    
+    # Other Feeds
     add_entries(get_feed("http://www.dzone.com/links/feed/frontpage/rss.xml", "dzone"), 'DZone')
     add_entries(get_slashdot_feed(), 'Slashdot')
     add_entries(get_techmeme_feed(), 'Techmeme')
