@@ -390,7 +390,8 @@ def main():
     context = {
         'all_entries': all_entries,
         'current_datetime': current_datetime_str,
-        'title': 'README'
+        'title': 'README',
+        'cache_buster': int(time.time())
     }
 
     # Render template and save to index.html
