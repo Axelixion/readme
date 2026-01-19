@@ -120,4 +120,23 @@ function gridCellDimensions() {
   onDebugToggle();
 
 // Add your custom JavaScript here
-console.log('Dashboard initialized'); 
+console.log('Dashboard initialized');
+
+// Inline Summary Toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const mainFeed = document.querySelector('.main-feed');
+
+    if (mainFeed) {
+        mainFeed.addEventListener('click', (event) => {
+            const toggleButton = event.target.closest('.toggle-summary-btn');
+
+            if (toggleButton) {
+                const feedItem = toggleButton.closest('.feed-item-row');
+                if (feedItem) {
+                    feedItem.classList.toggle('summary-open');
+                }
+            }
+        });
+    }
+});
+ 
