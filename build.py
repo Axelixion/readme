@@ -297,10 +297,12 @@ def get_techmeme_feed():
 
 
 def main():
-    # Create the docs directory
+    # Create the docs directory and copy static assets
     if os.path.exists(DEPLOY_DIRECTORY):
         shutil.rmtree(DEPLOY_DIRECTORY)
-    os.makedirs(os.path.join(DEPLOY_DIRECTORY, 'imgs', 'thumbs'))
+    os.makedirs(DEPLOY_DIRECTORY) # Create the main docs directory first
+    shutil.copytree('static', os.path.join(DEPLOY_DIRECTORY, 'static')) # Copy static assets
+    os.makedirs(os.path.join(DEPLOY_DIRECTORY, 'imgs', 'thumbs')) # Then create thumbs inside docs
 
     # Create .nojekyll file to prevent Jekyll from building the site
     with open(os.path.join(DEPLOY_DIRECTORY, '.nojekyll'), 'w') as f:
