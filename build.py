@@ -350,14 +350,14 @@ def main():
     add_entries(get_reddit_like_feed("https://www.reddit.com/r/unitedkingdom/.rss", "r_unitedkingdom"), 'UK')
     
     # Tech & Science Subreddits
-    add_entries(get_reddit_like_feed("https://www.reddit.com/r/futurology/.rss", "r/futurology"), 'Futurology')
-    add_entries(get_reddit_like_feed("https://www.reddit.com/r/space/.rss", "r/space"), 'Space')
-    add_entries(get_reddit_like_feed("https://www.reddit.com/r/gadgets/.rss", "r/gadgets"), 'Gadgets')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/futurology/.rss", "r_futurology"), 'Futurology')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/space/.rss", "r_space"), 'Space')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/gadgets/.rss", "r_gadgets"), 'Gadgets')
     
     # Pop Culture Subreddits
-    add_entries(get_reddit_like_feed("https://www.reddit.com/r/movies/.rss", "r/movies"), 'Movies')
-    add_entries(get_reddit_like_feed("https://www.reddit.com/r/television/.rss", "r/television"), 'Television')
-    add_entries(get_reddit_like_feed("https://www.reddit.com/r/music/.rss", "r/music"), 'Music')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/movies/.rss", "r_movies"), 'Movies')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/television/.rss", "r_television"), 'Television')
+    add_entries(get_reddit_like_feed("https://www.reddit.com/r/music/.rss", "r_music"), 'Music')
     
     # Other Feeds
     add_entries(get_feed("http://www.dzone.com/links/feed/frontpage/rss.xml", "dzone"), 'DZone')
