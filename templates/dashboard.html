@@ -4,11 +4,11 @@
 <div class="main-feed">
     {% for entry in all_entries %}
     <div class="feed-item-row">
-        <div class="item-score">
-            {% if entry.score %}
-            {{ entry.score }}
-            {% else %}
-            0
+        <div class="item-comments">
+            {% if entry.comments_link %}
+            <a href="{{ entry.comments_link }}" target="_blank" title="{{ entry.comments_count | default('0') }} comments">
+                <ion-icon name="chatbubble-outline"></ion-icon>
+            </a>
             {% endif %}
         </div>
         <div class="item-content">
@@ -17,28 +17,16 @@
             </div>
             <div class="item-meta">
                 <span class="item-source">({{ entry.source_name }})</span>
-                {% if entry.comments_link %}
-                | <a href="{{ entry.comments_link }}" target="_blank">
-                    {% if entry.comments_count %}
-                    {{ entry.comments_count }} comments
-                    {% else %}
-                    discuss
-                    {% endif %}
-                </a>
-                {% endif %}
                 {% if entry.published_formatted %}
                 | <span>{{ entry.published_formatted }}</span>
                 {% endif %}
             </div>
-            {% if entry.description %}
-            <div class="item-description">
-                {{ entry.description | safe }}
-            </div>
-            {% endif %}
-            {% if entry.thumb %}
-            <div class="item-thumbnail">
-                <img src="{{ entry.thumb }}" alt="Thumbnail">
-            </div>
+        </div>
+        <div class="item-score">
+            {% if entry.score %}
+            {{ entry.score }}
+            {% else %}
+            0
             {% endif %}
         </div>
     </div>
